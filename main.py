@@ -11,7 +11,12 @@ def main():
     modulo = 1000
 
     client_shares = [compute_share(value, modulo) for value in client_values]
-    parties = [Party(share, modulo) for share in zip(*client_shares)]
+    for client_share in client_shares:
+        logging.info(client_share)
+    client_shares_vertical = list(zip(*client_shares))
+    for client_share in client_shares_vertical:
+        logging.info(client_share)
+    parties = [Party(share, modulo) for share in client_shares_vertical]
 
     mpc_addition = MPCAddition(parties)
     mpc_average = MPCAverage(parties)
