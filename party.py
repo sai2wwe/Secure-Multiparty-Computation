@@ -1,9 +1,8 @@
 class Party:
-    def __init__(self, a_share, b_share, modulo) -> None:
-        self.a_share = a_share
-        self.b_share = b_share
+    def __init__(self, client_shares, modulo=1000) -> None:
+        self.client_shares = client_shares
         self.modulo = modulo
     
     def compute_partial_sum(self) -> int:
-        return (self.a_share + self.b_share) % self.modulo
-    
+        self.parital_sum =  sum(self.client_shares) % self.modulo
+        return self.parital_sum
