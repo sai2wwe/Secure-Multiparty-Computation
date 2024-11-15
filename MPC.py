@@ -2,7 +2,7 @@ from typing import Tuple
 import logging
 import secrets
 logging.basicConfig(level=logging.INFO)
-
+from party import Party
 
 
 a = int(input("Enter a number: "))
@@ -12,22 +12,6 @@ modulo = 1000
 def sum_of_two(a, b):
     return a + b
 
-
-class Party:
-    """
-    Represents a party in the Multi-Party Computation (MPC).
-    Attributes:
-        a_share: Share of the first input.
-        b_share: Share of the second input.
-        modulo: Modulo value for computations.
-    """
-    def __init__(self, a_share, b_share, modulo) -> None:
-        self.a_share = a_share
-        self.b_share = b_share
-        self.modulo = modulo
-    
-    def compute_partial_sum(self) -> int:
-        return (self.a_share + self.b_share) % self.modulo
 
 class MPCAddition:
     def __init__(self, parties):
