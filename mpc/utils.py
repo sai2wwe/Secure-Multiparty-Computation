@@ -1,4 +1,5 @@
 from typing import Tuple
+from mpc.party import Party
 import secrets
 def sum_of_values(client_values):
     return sum(client_values)
