@@ -1,6 +1,6 @@
 from mpc.core import MPCAddition, MPCAverage
 from mpc.party import Party
-from mpc.utils import compute_share, sum_of_values
+from mpc.utils import generate_secret_shares, sum_of_values
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -8,9 +8,10 @@ logging.basicConfig(level=logging.INFO)
 def main():
     clients = int(input("Enter the number of participants: "))
     client_values = [int(input(f"Enter the value for client {i+1}: ")) for i in range(clients)]
-    modulo = 1000
+    modulo = int(input("Enter the modulo: "))
+    share_count = int(input("Enter the number of shares to be generated: "))
 
-    client_shares = [compute_share(value, modulo) for value in client_values]
+    client_shares = [generate_secret_shares(value, share_count, modulo) for value in client_values]
     for client_share in client_shares:
         logging.info(client_share)
     client_shares_vertical = list(zip(*client_shares))

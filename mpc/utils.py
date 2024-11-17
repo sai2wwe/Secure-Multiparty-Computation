@@ -1,22 +1,24 @@
 from typing import Tuple
 from mpc.party import Party
 import secrets
+
+
 def sum_of_values(client_values):
     return sum(client_values)
 
-  
-def compute_share(client_value, modulu=1000) -> Tuple[int]:
+
+def generate_secret_shares(secret, num_shares=3, modulus=1000) -> Tuple[int]:
     '''
-    This function computes the shares of a number
-    @param a: the number to be shared
-    @return: the shares of the number Tuple(first_share, second_share, third_share)
+    This function generates the shares of a secret
+    @param secret: the value to be shared
+    @param num_shares: the number of shares to split the secret into
+    @param modulus: the modulus for the shares (default is 1000)
+    @return: a list containing the shares of the secret
     '''
-    while True:
-        first_share = secrets.randbelow(modulu)
-        second_share =secrets.randbelow(modulu)
-        third_share = (client_value - first_share - second_share) % modulu
-        if third_share >= 0:
-            return first_share, second_share, third_share 
+    partial_shares = [secrets.randbelow(modulus) for _ in range(num_shares - 1)]
+    last_share = (secret - sum(partial_shares)) % modulus
+    return partial_shares + [last_share]
+
 
 def reconstruct_value(shares, modulu=1000):
     '''
@@ -25,6 +27,7 @@ def reconstruct_value(shares, modulu=1000):
     @return: the reconstructed value
     '''
     return sum(shares) % modulu
+
 
 def create_parites(client_shares, modulo=1000):
     '''
