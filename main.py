@@ -23,8 +23,8 @@ def main():
     mpc_average = MPCAverage(parties)
 
     logging.info(f"Actual sum: {sum_of_values(client_values)}")
-    logging.info(f"MPC computed sum: {mpc_addition.compute_sum()}")
-    logging.info(f"MPC computed average: {mpc_average.compute_average()}")
+    logging.info(f"MPC computed sum: {mpc_addition.compute()}")
+    logging.info(f"MPC computed average: {mpc_average.compute()}")
 
 if __name__ == "__main__":
     main()
