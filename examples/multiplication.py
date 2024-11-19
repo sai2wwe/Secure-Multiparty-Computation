@@ -1,4 +1,4 @@
-from mpc.beavers import beavers_triples, share_triples
+from mpc.protocols.beavers import beavers_triples, share_triples
 from mpc.utils import generate_secret_shares
 from mpc.party import BeaverParty
 from mpc.core import MPCMultiplication
