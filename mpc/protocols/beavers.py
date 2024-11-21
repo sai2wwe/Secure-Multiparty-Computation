@@ -3,9 +3,13 @@ from secrets import randbelow
 
 def beavers_triples(modulus=1000):
     """
-    This function generates the Beaver's Triple
-    @param modulus: the modulo value to be used
-    @return: a, b, c
+    Generates a Beaver's Triple within the given modulus
+
+    Args:
+        modulus (int): the modulo value to be used
+    
+    Returns:
+        a, b, c: the values of the Beaver
     """
     a = randbelow(modulus)
     b = randbelow(modulus)
@@ -14,13 +18,15 @@ def beavers_triples(modulus=1000):
 
 def share_triples(a, b, c, num_shares, modulus):
     """
-    This function generates the shares of the Beaver's Triple
-    @param a: the value a
-    @param b: the value b
-    @param c: the value c
-    @param num_shares: the number of shares to be generated
-    @param modulus: the modulo value to be used
-    @return: a_share, b_share, c_share
+    Shares the Beaver's Triple among the parties
+
+    Args:
+        a, b, c (int): the values of the Beaver
+        num_shares (int): the number of shares to split the secret into
+        modulus (int): the modulo value to be used
+    
+    Returns:
+        a_share, b_share, c_share: the shares of the Beaver
     """
     a_share = generate_secret_shares(a, num_shares, modulus)
     b_share = generate_secret_shares(b, num_shares, modulus)

@@ -1,9 +1,15 @@
+from typing import Tuple
 class Party:
     """
-    The Party class represents a party in the MPC protocol.
-    It contains the shares of the party and the modulo value.
-    client_shares: list of shares of the party
-    modulo: the modulo value to be used for the computation
+    Represents a party in the MPC protocol.
+    acts as a party in the MPC protocol. No party has access to the actual value of the secret or the shares of the other parties.
+
+    Attributes:
+        client_shares: list of shares of the party
+        modulo: the modulo value to be used for the computation
+    
+    Methods:
+        compute_partial_sum(): computes the sum of the shares
     """
     def __init__(self, client_shares, modulo=1000) -> None:
         self.client_shares = client_shares
@@ -19,27 +25,41 @@ class Party:
 
 class BeaverParty:
     """
-    The BeaverParty class represents a party in the Beaver's Triple protocol.
-    It contains the shares of the party and the modulo value.
-    xy_shares: shares of the values x and y
-    abc_shares: shares of the values a, b, and c
-    modulo: the modulo value to be used for the computation
+    Represents a party in the MPC protocol using Beaver's Triple.
+    Each party computes the partial product of the shares and the final product is computed by summing the partial products
+    x*y = c + e*b + f*a + [e*f] where [] is computed by only one party
+
+    Attributes:
+        x_share: the share of the value x
+        y_share: the share of the value y
+        a_share: the share of the value a
+        b_share: the share of the value b
+        c_share: the share of the value c
+        modulo: the modulo value to be used for the computation
+    
+    Methods:
+        compute_partial_e_f(): computes the partial values e and f
+        compute_partial_product(e, f): computes the partial product of the shares
     """
     def __init__(self, xy_shares, abc_shares, modulo):
         self.x_share, self.y_share = xy_shares
         self.a_share, self.b_share, self.c_share = abc_shares
         self.modulo = modulo
 
-    def compute_partial_e_f(self):
+    def compute_partial_e_f(self) -> Tuple[int]:
         """
-        It computes the partial values e and f.
-        returns: e, f
+        Computes the partial values e and f using the shares of the values x, y, a, b
+        e = (x - a) % modulo
+        f = (y - b) % modulo
+
+        Returns:
+            Tuple[int]: the partial values e and f
         """
         e = (self.x_share - self.a_share) % self.modulo
         f = (self.y_share - self.b_share) % self.modulo
         return e, f
 
-    def compute_partial_product(self, e, f):
+    def compute_partial_product(self, e, f) -> int:
         '''
         It computes the partial product of the shares.
         returns the partial product

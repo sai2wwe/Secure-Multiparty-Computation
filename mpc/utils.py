@@ -9,11 +9,15 @@ def sum_of_values(client_values):
 
 def generate_secret_shares(secret, num_shares=3, modulus=1000) -> Tuple[int]:
     '''
-    This function generates the shares of a secret
-    @param secret: the value to be shared
-    @param num_shares: the number of shares to split the secret into
-    @param modulus: the modulus for the shares (default is 1000)
-    @return: a list containing the shares of the secret
+    Generate secret shares of a number into num_shares within the modulus
+
+    Args:
+        secret (int): the secret to be shared
+        num_shares (int): the number of shares to split the secret into
+        modulus (int): the modulo value to be used
+    
+    Returns:
+        List[int]: the secret shares [s1, s2, ..., sn]
     '''
     partial_shares = [secrets.randbelow(modulus) for _ in range(num_shares - 1)]
     last_share = (secret - sum(partial_shares)) % modulus
@@ -22,19 +26,28 @@ def generate_secret_shares(secret, num_shares=3, modulus=1000) -> Tuple[int]:
 
 def reconstruct_value(shares, modulu=1000):
     '''
-    This function reconstructs the value from the shares
-    @param shares: the shares of the number
-    @return: the reconstructed value
+    Reconstruct the secret from the shares with the given modulu
+
+    Args:
+        shares (List[int]): the shares to be reconstructed
+        modulu (int): the modulo value to be used
+    
+    Returns:
+        int: the reconstructed secret [sigma(si) % modulu]
     '''
     return sum(shares) % modulu
 
 
 def create_parites(client_shares, modulo=1000):
     '''
-    This function creates the parties for the MPC
-    @param client_shares: the shares of the client
-    @param modulo: the modulo to be used
-    @return: the parties
+    Creates a list of parties from the client shares with the given modulo
+
+    Args:
+        client_shares (List[int]): the shares to be used to create the parties
+        modulo (int): the modulo value to be used
+
+    Returns:
+        List[Party]: the list of parties (Each party is an instance of the Party class)
     '''
     parties = []
     for client_share in client_shares:
