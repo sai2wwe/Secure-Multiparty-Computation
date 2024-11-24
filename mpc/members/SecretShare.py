@@ -1,5 +1,7 @@
 from typing import List
 from config.constants import DEFAULT_PRIME
+
+
 class SecretShare:
     def __init__(self, shares: List[int], modulus: int = DEFAULT_PRIME):    
         self.shares = shares
