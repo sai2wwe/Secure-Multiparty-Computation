@@ -1,5 +1,6 @@
 from mpc.protocols.ShamirPrep import generate_polynomial, evaluate_polynomial
 from config.constants import DEFAULT_PRIME, DEFAULT_THRESHOLD_DEGREE
+from mpc.members.SecretShare import SecretShare
 
 def generate_shares(secret, num_shares, threshold_degree=DEFAULT_THRESHOLD_DEGREE, prime=DEFAULT_PRIME):
     """
@@ -20,7 +21,7 @@ def generate_shares(secret, num_shares, threshold_degree=DEFAULT_THRESHOLD_DEGRE
         raise ValueError("Threshold degree must be less than the number of shares.")
     
     polynomial = generate_polynomial(secret, threshold_degree, prime)
-    return [(i, evaluate_polynomial(polynomial, i, prime)) for i in range(1, num_shares + 1)]
+    return SecretShare([(i, evaluate_polynomial(polynomial, i, prime)) for i in range(1, num_shares + 1)])
 
 def reconstruct_shares(shares, prime=DEFAULT_PRIME):
     """
