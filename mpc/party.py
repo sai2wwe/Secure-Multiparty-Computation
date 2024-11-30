@@ -1,4 +1,6 @@
-from typing import Tuple
+from typing import Tuple, Any
+
+
 class Party:
     """
     Represents a party in the MPC protocol.
@@ -11,17 +13,19 @@ class Party:
     Methods:
         compute_partial_sum(): computes the sum of the shares
     """
+
     def __init__(self, client_shares, modulo=1000) -> None:
+        self.partial_sum = None
         self.client_shares = client_shares
         self.modulo = modulo
-    
+
     def compute_partial_sum(self) -> int:
-        self.parital_sum =  sum(self.client_shares) % self.modulo
-        return self.parital_sum
-    
+        self.partial_sum = sum(self.client_shares) % self.modulo
+        return self.partial_sum
+
     def __str__(self) -> str:
         return f"Party(shares={self.client_shares}, modulo={self.modulo})"
-    
+
 
 class BeaverParty:
     """
@@ -41,12 +45,13 @@ class BeaverParty:
         compute_partial_e_f(): computes the partial values e and f
         compute_partial_product(e, f): computes the partial product of the shares
     """
+
     def __init__(self, xy_shares, abc_shares, modulo):
         self.x_share, self.y_share = xy_shares
         self.a_share, self.b_share, self.c_share = abc_shares
         self.modulo = modulo
 
-    def compute_partial_e_f(self) -> Tuple[int]:
+    def compute_partial_e_f(self) -> tuple[Any, Any]:
         """
         Computes the partial values e and f using the shares of the values x, y, a, b
         e = (x - a) % modulo
@@ -60,13 +65,13 @@ class BeaverParty:
         return e, f
 
     def compute_partial_product(self, e, f) -> int:
-        '''
+        """
         It computes the partial product of the shares.
         returns the partial product
         partial_product = c_share + e*b_share + f*a_share + [e*f]
         [] - only one party will compute this value
-        '''
-        print(e,f)
+        """
+        print(e, f)
         term1 = self.c_share
         term2 = (e * self.b_share)
         term3 = (f * self.a_share)

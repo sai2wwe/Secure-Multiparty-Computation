@@ -5,9 +5,10 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
+
 def main():
     clients = int(input("Enter the number of participants: "))
-    client_values = [int(input(f"Enter the value for client {i+1}: ")) for i in range(clients)]
+    client_values = [int(input(f"Enter the value for client {i + 1}: ")) for i in range(clients)]
     modulo = int(input("Enter the modulo: "))
     share_count = int(input("Enter the number of shares to be generated: "))
 
@@ -25,5 +26,7 @@ def main():
     logging.info(f"Actual sum: {sum_of_values(client_values)}")
     logging.info(f"MPC computed sum: {mpc_addition.compute()}")
     logging.info(f'MPC Computed Average: {mpc_average.compute()}')
+
+
 if __name__ == "__main__":
     main()
