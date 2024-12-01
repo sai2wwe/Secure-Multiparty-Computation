@@ -1,6 +1,7 @@
 from secrets import randbelow
 from config.constants import DEFAULT_PRIME, DEFAULT_THRESHOLD_DEGREE
 
+
 def generate_polynomial(secret, threshold_degree=DEFAULT_THRESHOLD_DEGREE, prime=DEFAULT_PRIME):
     """
     Generate a random polynomial with a specified degree, where the constant term is the secret.
@@ -17,6 +18,7 @@ def generate_polynomial(secret, threshold_degree=DEFAULT_THRESHOLD_DEGREE, prime
         raise ValueError("Secret must be less than the prime number.")
     return [secret] + [randbelow(prime) for _ in range(threshold_degree)]
 
+
 def evaluate_polynomial(polynomial, x, prime=DEFAULT_PRIME):
     """
     Evaluate a polynomial at a given point x using modular arithmetic.
@@ -30,7 +32,7 @@ def evaluate_polynomial(polynomial, x, prime=DEFAULT_PRIME):
         int: The result of the polynomial evaluation mod prime.
     """
     total = 0
-    for i, coef in enumerate(polynomial):
-        total += coef * pow(x, i, prime)
+    for i, coefficient in enumerate(polynomial):
+        total += coefficient * pow(x, i, prime)
         total %= prime
     return total

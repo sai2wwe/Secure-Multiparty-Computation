@@ -1,6 +1,7 @@
 from mpc.utils import generate_secret_shares
 from secrets import randbelow
 
+
 def beavers_triples(modulus=1000):
     """
     Generates a Beaver's Triple within the given modulus
@@ -15,6 +16,7 @@ def beavers_triples(modulus=1000):
     b = randbelow(modulus)
     c = (a * b) % modulus
     return a, b, c
+
 
 def share_triples(a, b, c, num_shares, modulus):
     """
@@ -32,4 +34,3 @@ def share_triples(a, b, c, num_shares, modulus):
     b_share = generate_secret_shares(b, num_shares, modulus)
     c_share = generate_secret_shares(c, num_shares, modulus)
     return a_share, b_share, c_share
-
