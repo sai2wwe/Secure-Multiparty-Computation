@@ -37,7 +37,7 @@ class MPCAddition(MPC):
 
 
 class MPCAverage(MPCAddition):
-    def compute(self) -> int:
+    def compute(self) -> float:
         return super().compute() / len(self.parties)
 
 
@@ -66,7 +66,7 @@ class MPCMultiplication(MPC):
         self.e, self.f = None, None
         self.product_shares = []
 
-    def compute_ef_shares(self) -> int:
+    def compute_ef_shares(self):
         e_shares, f_shares = [], []
         for i, party in enumerate(self.parties):
             e, f = party.compute_partial_e_f()

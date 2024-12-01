@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, List
 from mpc.party import Party
 import secrets
 
@@ -7,7 +7,7 @@ def sum_of_values(client_values):
     return sum(client_values)
 
 
-def generate_secret_shares(secret, num_shares=3, modulus=1000) -> Tuple[int]:
+def generate_secret_shares(secret, num_shares=3, modulus=1000) -> list[int]:
     """
     Generate secret shares of a number into num_shares within the modulus
 
@@ -15,7 +15,7 @@ def generate_secret_shares(secret, num_shares=3, modulus=1000) -> Tuple[int]:
         secret (int): the secret to be shared
         num_shares (int): the number of shares to split the secret into
         modulus (int): the modulo value to be used
-
+    
     Returns:
         List[int]: the secret shares [s1, s2, ..., sn]
     """
@@ -31,9 +31,9 @@ def reconstruct_value(shares, modulus=1000):
     Args:
         shares (List[int]): the shares to be reconstructed
         modulus (int): the modulo value to be used
-
+    
     Returns:
-        int: the reconstructed secret [sigma(si) % modulus
+        int: the reconstructed secret [sigma(si) % modulus]
     """
     return sum(shares) % modulus
 

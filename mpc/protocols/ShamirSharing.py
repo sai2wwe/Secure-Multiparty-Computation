@@ -1,5 +1,20 @@
+"""
+
+This File contains the implementation of Shamir's Secret Sharing Protocol.
+It contains two functions:
+    - generate_shares: This function generates a list of shares for a given secret using Shamir's Secret Sharing.
+    - reconstruct_shares: This function reconstructs the secret from a given list of shares using Lagrange interpolation.
+
+The implementation is based on the following steps:
+    - Generate a random polynomial with a specified degree, where the constant term is the secret.
+    - Evaluate the polynomial at different points to generate the shares.
+    - Reconstruct the secret using Lagrange interpolation.
+
+"""
+
 from mpc.protocols.ShamirPrep import generate_polynomial, evaluate_polynomial
 from config.constants import DEFAULT_PRIME, DEFAULT_THRESHOLD_DEGREE
+from mpc.members.SecretShare import SecretShare
 
 
 def generate_shares(secret, num_shares, threshold_degree=DEFAULT_THRESHOLD_DEGREE, prime=DEFAULT_PRIME):
@@ -21,7 +36,7 @@ def generate_shares(secret, num_shares, threshold_degree=DEFAULT_THRESHOLD_DEGRE
         raise ValueError("Threshold degree must be less than the number of shares.")
 
     polynomial = generate_polynomial(secret, threshold_degree, prime)
-    return [(i, evaluate_polynomial(polynomial, i, prime)) for i in range(1, num_shares + 1)]
+    return SecretShare([(i, evaluate_polynomial(polynomial, i, prime)) for i in range(1, num_shares + 1)])
 
 
 def reconstruct_shares(shares, prime=DEFAULT_PRIME):
@@ -42,7 +57,7 @@ def reconstruct_shares(shares, prime=DEFAULT_PRIME):
         for k, (xk, _) in enumerate(shares):
             if i == k:
                 continue
-            lagrange_coefficient *= -xk * pow(xj - xk, -1, prime)
+            lagrange_coefficient *= -xk * pow(xj - xk, -1, prime) # lagrange_coeff = (x - x0) / (xj - x0) * (x - x1) / (xj - x1) * ... * (x - xk) / (xj - xk)
             lagrange_coefficient %= prime
         total += yj * lagrange_coefficient
         total %= prime

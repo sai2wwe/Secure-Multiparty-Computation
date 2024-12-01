@@ -7,5 +7,6 @@ threshold_degree = 4
 
 shares = generate_shares(x, num_shares, threshold_degree, prime)
 print("Shares:", shares)
-check = reconstruct_shares(shares, shares[:threshold_degree+1])
-print("Check:", check)
+print("share values: ", shares.get_shares_only())
+print("share values: ", shares.get_share_owner_value(1))
+print('reconstructed value:', reconstruct_shares(shares.shares, prime))
