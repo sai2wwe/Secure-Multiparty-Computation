@@ -1,9 +1,9 @@
-from typing import List
+from typing import List, Tuple
 from config.constants import DEFAULT_PRIME
 
 
 class SecretShare:
-    def __init__(self, shares: List[int], modulus: int = DEFAULT_PRIME):    
+    def __init__(self, shares: List[Tuple[int, int]], modulus: int = DEFAULT_PRIME):
         self.shares = shares
         self.num_shares = len(shares)
         self.modulus = modulus
